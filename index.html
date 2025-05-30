@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-site-verification" content="JGSM6XGJVjlLsyntZhXLJn7mibos9i0EBPx4Y3_SnVk" />
+
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ctrlcrash.github.io/" />
+  <meta property="og:title" content="Ctrl-Crash: Controllable Diffusion for Realistic Car Crashes" />
+  <meta property="og:description" content="Generating car crash videos through controllable diffusion models." />
+  <!-- Path to banner image, should be in the path listed below. Optimal dimensions are 1200X630-->
+  <meta property="og:image" content="./static/images/logo_black.png" />
+  <meta property="og:image:width" content="616"/>
+  <meta property="og:image:height" content="247"/>
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://ctrlcrash.github.io/" />
+  <meta name="twitter:title" content="Ctrl-Crash: Controllable Diffusion for Realistic Car Crashes" />
+  <meta name="twitter:description" content="Generating car crash videos through controllable diffusion models." />
+  <!-- Path to banner image, should be in the path listed below. Optimal dimensions are 1200X600-->
+  <meta name="twitter:image" content="./static/images/logo_black.png" />
+
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="video generation; motion control; diffusion model; car crash; counterfactual generation; autonomous driving; simulation; training; safety analysis">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>Ctrl-Crash: Controllable Diffusion for Realistic Car Crashes</title>
+  <link rel="icon" type="image/png" href="static/images/crash_logo.png">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .header {
+    text-align: center;
+    padding: 32px;
+  }
+  
+  .row {
+    display: -ms-flexbox; /* IE 10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE 10 */
+    flex-wrap: wrap;
+    padding: 0 4px;
+  }
+  
+  /* Create two equal columns that sits next to each other */
+  .column {
+    -ms-flex: 50%; /* IE 10 */
+    flex: 50%;
+    padding: 0px;
+    margin: 0;
+  }
+  
+  /* Create three equal columns that floats next to each other */
+.threecolumns {
+  float: left;
+  width: 33.33%;
+  padding: 0px;
+  margin: 0;
+}
+
+  .column img {
+    margin-top: 8px;
+    vertical-align: middle;
+  }
+  
+  /* Style the buttons */
+  .btn {
+    border: none;
+    outline: none;
+    padding: 10px 16px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+  .btn:hover {
+    background-color: #ddd;
+  }
+  
+  .btn.active {
+    background-color: #666;
+    color: white;
+  }
+
+  table, th, td {
+    border: none;
+    border-collapse: collapse;
+    padding: 0;
+    margin: 0;
+  }
+
+  table.center {
+    margin-left: auto; 
+    margin-right: auto;
+    border-spacing: 0;
+  }
+
+  /* Override Bulma's is-max-desktop max-width */
+  .container.is-max-desktop {
+    max-width: 1600px;
+  }
+  </style>
+
+</head>
+
+
+
+<body>
+
+  <!-- Navbar -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">💥 Ctrl-Crash: Controllable Diffusion for Realistic Car Crashes</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">anonymous</span>
+            </div>
+            <div class="is-size-5 publication-authors" style="margin-top: 1rem;">
+              <span class="author-block">
+                <a href="https://github.com/CtrlCrash-Anonymous/Ctrl-Crash-Anonymous" target="_blank" class="button is-small is-light">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <!-- Space for additional links -->
+              <!-- <span class="author-block" style="margin-left: 0.5rem;">
+                <a href="#" target="_blank" class="button is-small is-light">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+            </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Three videos eye-candy row -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div id="BDD" class="tabcontent">
+        <div class="row"> 
+          <div class="threecolumns">
+              <video autoplay muted loop playsinline style="width:100%">
+                  <source src="static/eye_candy_clips/genvid_57_11_04453.mov"
+                          type="video/mp4">
+              </video>
+          </div>
+          <div class="threecolumns">
+              <video autoplay muted loop playsinline style="width:100%">
+                  <source src="static/eye_candy_clips/genvid_64_48_08386.mov"
+                          type="video/mp4">
+              </video>
+          </div>
+          <div class="threecolumns">
+            <video autoplay muted loop playsinline style="width:100%">
+                <source src="static/eye_candy_clips/genvid_87_21_08924.mov"
+                        type="video/mp4">
+            </video>
+          </div> 
+        </div>
+      </div>
+      <h2 class="subtitle has-text-centered">
+        Generated Crash Videos 🚗💥
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Video diffusion techniques have advanced significantly in recent years; however, they struggle to generate realistic imagery of car crashes due to the scarcity of accident events in most driving datasets. Improving traffic safety requires realistic and controllable accident simulations. To tackle the problem, we propose Ctrl-Crash, a controllable car crash video generation model that conditions on signals such as bounding boxes, crash types, and an initial image frame. Our approach enables counterfactual scenario generation where minor variations in input can lead to dramatically different crash outcomes. To support fine-grained control at inference time, we leverage classifier-free guidance with independently tunable scales for each conditioning signal. Ctrl-Crash achieves state-of-the-art performance across quantitative video quality metrics (e.g., FVD and JEDi) and qualitative measurements based on a human-evaluation of physical realism and video quality compared to prior diffusion-based methods.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+<!-- Red car teaser video-->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div style="width: 100%; max-width: 1400px; display: flex; justify-content: center;">
+        <img src="static/images/teaser.png" alt="Ctrl_Crash_teaser" class="center-image">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop" style="max-width: 1000px;">
+    <div class="hero-body">
+      <div class="columns is-centered">
+        <div class="column is-6">
+          <video autoplay muted loop playsinline style="width:100%">
+            <source src="./static/teaser_clip/redcar_GT_43_90098.mov"
+                    type="video/mp4">
+          </video>
+          <div style="text-align: center; margin-bottom: 5px;"><b>Ground-truth</b></div>
+        </div>
+        <div class="column is-6">
+          <video autoplay muted loop playsinline style="width:100%">
+            <source src="./static/teaser_clip/redcar_genvid_43_90098.mov"
+                    type="video/mp4">
+          </video>
+          <div style="text-align: center; margin-bottom: 5px;"><b>Generated</b></div>
+        </div>
+      </div>
+      <h2 class="subtitle has-text-centered">
+        Counterfactual Crash Generation
+      </h2>
+    </div>
+  </div>
+</section>
+<!-- End red car teaser video -->
+
+
+<!-- Counterfactual video (truck) -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Generation of Scenarios with Varying Crash Types</h2>
+      <p style="margin-bottom: 2rem;">These examples illustrate scenarios conditioned for multiple distinct crash types (which describe which actors are involved in the crash):</p>
+      <div style="display: flex; justify-content: center; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto;">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          
+          <video autoplay muted loop playsinline style="width:100%">
+            <source src="./static/Counterfactuals_selected/43_05634/56_43_05634/gt_video.mov"
+                    type="video/mp4">
+          </video>
+          <div style="text-align: center; margin-bottom: 5px;"><b>Ground-truth</b></div>
+        </div>
+      </div>
+      <br />
+      <table class="center"> 
+        <tr> 
+            <!-- <td><video autoplay muted loop playsinline height="80px">
+                <source src="./static/Counterfactuals_selected/43_05634/56_43_05634/(3)genvid_adv_56_43_05634_bframes:3_action:0_guide1:9.mov"
+                        type="video/mp4">
+              </video>
+            </td>  -->
+            <td>
+  
+              <video autoplay muted loop playsinline height="80px">
+                <source src="./static/Counterfactuals_selected/43_05634/56_43_05634_bframes:3_action:3_guide1:9/(3)genvid_adv_56_43_05634_bframes:3_action:3_guide1:9.mov"
+                        type="video/mp4">
+              </video>
+              <div style="text-align: center; margin-bottom: 5px;"><b>No Crash</b></div>
+            </td>
+            <td>
+              
+              <video autoplay muted loop playsinline height="80px">
+                <source src="./static/Counterfactuals_selected/43_05634/56_43_05634_bframes:3_action:1_guide1:9/(3)genvid_adv_56_43_05634_bframes:3_action:1_guide1:9.mov"
+                        type="video/mp4">
+              </video>
+              <div style="text-align: center; margin-bottom: 5px;"><b>Ego-Only crash</b></div>
+            </td>
+            <td>
+              
+              <video autoplay muted loop playsinline height="80px">
+                <source src="./static/Counterfactuals_selected/43_05634/56_43_05634_bframes:3_action:2_guide1:9/(3)genvid_adv_56_43_05634_bframes:3_action:2_guide1:9.mov"
+                        type="video/mp4">
+              </video>
+              <div style="text-align: center; margin-bottom: 5px;"><b>Ego-and-Vehicle crash</b></div>
+            </td>
+            <td>
+              
+              <video autoplay muted loop playsinline height="80px">
+                <source src="./static/Counterfactuals_selected/genvid_55_43_05634.mov"
+                        type="video/mp4">
+              </video>
+              <div style="text-align: center; margin-bottom: 5px;"><b>Vehicle-Only crash</b></div>
+            </td>
+            <td>
+              <video autoplay muted loop playsinline height="80px">
+                <source src="./static/Counterfactuals_selected/43_05634/56_43_05634_bframes:3_action:4_guide1:9/(3)genvid_adv_56_43_05634_bframes:3_action:4_guide1:9.mov"
+                        type="video/mp4">
+              </video>
+              <div style="text-align: center; margin-bottom: 5px;"><b>Vehicle-and-Vehicle crash</b></div>
+            </td>
+        </tr> 
+        </table>
+    </div>
+  </div>
+</section> 
+<!-- End counterfactual video (truck) -->
+
+<!-- RECONSTRUCTION -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Crash Reconstruction</h2>
+      <p style="margin-bottom: 2rem;">Crash predicted by Ctrl-Crash using the initial frame and all bounding-box frames as input:</p>
+      <!-- Tab content -->
+      <div id="BDD" class="tabcontent">
+        <div class="row"> 
+          <div class="threecolumns">
+            <div style="text-align: center; margin-bottom: 5px;"><b>Ground-truth Clip</b></div>
+            <video id="gt_03" autoplay muted loop playsinline height="100%">
+              <source src="./static/reconstruction/93_43_90178/(1)gt_video_93_43_90178_guide1_9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="gt_01" autoplay muted loop playsinline height="100%">
+              <source src="./static/reconstruction/67_11_08074/gt_video_67_11_08074_guide1_9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="gt_02" autoplay muted loop playsinline height="100%">
+              <source src="./static/reconstruction/92_11_90073/(1)gt_video_92_11_90073_guide1:9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="gt_00" autoplay muted loop playsinline height="100%">
+              <source src="./static/reconstruction/30_43_01923/gt_video_30_43_01923_guide1_9.mov"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="threecolumns">
+            <div style="text-align: center; margin-bottom: 5px;"><b>Bounding-box Frames</b></div>
+            <video id="bbox_03" autoplay muted loop playsinline height="100%">
+              <source src="./static/reconstruction/93_43_90178/(2)video_2dbboxes_93_43_90178_guide1_9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="bbox_01" autoplay muted loop playsinline height="100%">
+              <source src="./static/reconstruction/67_11_08074/video_2dbboxes_67_11_08074_guide1_9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="bbox_02" autoplay muted loop playsinline height="100%">
+              <source src="./static/reconstruction/92_11_90073/(2)video_2dbboxes_92_11_90073_guide1:9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="bbox_00" autoplay muted loop playsinline height="100%">
+              <source src="./static/reconstruction/30_43_01923/video_2dbboxes_30_43_01923_guide1_9.mov"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="threecolumns">
+            <div style="text-align: center; margin-bottom: 5px;"><b>Predicted Crash Clip</b></div>
+            <video id="pred_03" autoplay muted loop playsinline height="100%">
+              <source src="./static/reconstruction/93_43_90178/(3)genvid_adv_93_43_90178_guide1_9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="pred_01" autoplay muted loop playsinline height="100%">
+              <source src="./static/reconstruction/67_11_08074/genvid_67_11_08074.mov"
+                      type="video/mp4">
+            </video>
+            <video id="pred_02" autoplay muted loop playsinline height="100%">
+              <source src="./static/reconstruction/92_11_90073/genvid_92_11_90073.mov"
+                      type="video/mp4">
+            </video>
+            <video id="pred_00" autoplay muted loop playsinline height="100%">
+              <source src="./static/reconstruction/30_43_01923/genvid_30_43_01923.mov"
+                      type="video/mp4">
+            </video>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 
+<!-- End crash reconstruction -->
+
+<!-- CRASH PREDICTION -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Crash Prediction</h2>
+      <p style="margin-bottom: 2rem;">Crash predicted by Ctrl-Crash using the initial frame and the first 9 bounding-box frames as input (white frames indicate that the bounding-boxes were masked):</p>
+      <!-- Tab content -->
+      <div id="BDD" class="tabcontent">
+        <div class="row"> 
+          <div class="threecolumns">
+            <div style="text-align: center; margin-bottom: 5px;"><b>Ground-truth Clip</b></div>
+            <video id="gt_03" autoplay muted loop playsinline height="100%">
+              <source src="./static/prediction/128_10_07870/(1)gt_video_128_10_07970_bframes-9_guide1-9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="gt_04" autoplay muted loop playsinline height="100%">
+              <source src="./static/prediction/153_11_03073/(1)gt_video_153_11_03073_bframes:9_guide1:9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="gt_01" autoplay muted loop playsinline height="100%">
+              <source src="./static/prediction/71_11_04685/(1)gt_video_71_11_04685_bframes:9_guide1:9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="gt_02" autoplay muted loop playsinline height="100%">
+              <source src="./static/prediction/86_11_09649/(1)gt_video_86_11_09649_bframes:9_guide1:9.mov"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="threecolumns">
+            <div style="text-align: center; margin-bottom: 5px;"><b>Bounding-box Frames</b></div>
+            <video id="bbox_03" autoplay muted loop playsinline height="100%">
+              <source src="./static/prediction/128_10_07870/(2)video_2dbboxes_128_10_07970_bframes-9_guide1-9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="bbox_04" autoplay muted loop playsinline height="100%">
+              <source src="./static/prediction/153_11_03073/(2)video_2dbboxes_153_11_03073_bframes:9_guide1:9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="bbox_01" autoplay muted loop playsinline height="100%">
+              <source src="./static/prediction/71_11_04685/(2)video_2dbboxes_71_11_04685_bframes:9_guide1:9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="bbox_02" autoplay muted loop playsinline height="100%">
+              <source src="./static/prediction/86_11_09649/(2)video_2dbboxes_86_11_09649_bframes:9_guide1:9.mov"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="threecolumns">
+            <div style="text-align: center; margin-bottom: 5px;"><b>Predicted Crash Clip</b></div>
+            <video id="pred_03" autoplay muted loop playsinline height="100%">
+              <source src="./static/prediction/128_10_07870/genvid_128_10_07970.mov"
+                      type="video/mp4">
+            </video>
+            <video id="pred_04" autoplay muted loop playsinline height="100%">
+              <source src="./static/prediction/153_11_03073/(3)genvid_adv_153_11_03073_bframes:9_guide1:9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="pred_01" autoplay muted loop playsinline height="100%">
+              <source src="./static/prediction/71_11_04685/(3)genvid_adv_71_11_04685_bframes:9_guide1:9.mov"
+                      type="video/mp4">
+            </video>
+            <video id="pred_02" autoplay muted loop playsinline height="100%">
+              <source src="./static/prediction/86_11_09649/(3)genvid_adv_86_11_09649_bframes:9_guide1:9.mov"
+                      type="video/mp4">
+            </video>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 
+<!-- End crash prediction -->
+
+<!-- Crash generation from non-crash data -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Crash Generation from Non-Crash Data</h2>
+      <p style="margin-bottom: 2rem;">Generating crashes from the non-accident BDD100K dataset by conditioning on the initial frame and the first 9 bounding-box frames:</p>
+      <!-- Tab content -->
+      <div id="BDD" class="tabcontent">
+        <div class="row" style="max-width: 1200px; margin-left: auto; margin-right: auto;"> 
+          <div class="column">
+            <div style="text-align: center; margin-bottom: 5px;"><b>Ground-truth</b></div>
+              <video autoplay muted loop playsinline style="width:100%">
+                <source src="static/bdd_selected/107_b2505382-de5238f0-00_bframes:3_action:2_guide1:9/(1)gt_video_107_b2505382-de5238f0-00_bframes:3_action:2_guide1:9.mov"
+                        type="video/mp4">
+              </video>
+
+              <video autoplay muted loop playsinline style="width:100%">
+                  <source src="static/bdd_selected/61_b1dac7f7-6b2e0382-00_bframes:3_action:2_guide1:9/(1)gt_video_61_b1dac7f7-6b2e0382-00_bframes:3_action:2_guide1:9.mov"
+                          type="video/mp4">
+              </video>
+
+              <video autoplay muted loop playsinline style="width:100%">
+                  <source src="static/bdd_selected/100_b1f4491b-bf7d513f-00_bframes:3_action:2_guide1:9/(1)gt_video_100_b1f4491b-bf7d513f-00_bframes:3_action:2_guide1:9.mov"
+                          type="video/mp4">
+              </video>
+
+              <video autoplay muted loop playsinline style="width:100%">
+                  <source src="static/bdd_selected/39_b21d5efb-5e2cd743-00_bframes:3_action:2_guide1:9/(1)gt_video_39_b21d5efb-5e2cd743-00_bframes:3_action:2_guide1:9.mov"
+                          type="video/mp4">
+              </video>
+
+              <!-- <video autoplay muted loop playsinline style="width:100%">
+                <source src="static/bdd_selected/50_b200e97a-bf074435-00_bframes:3_action:2_guide1:9/(1)gt_video_50_b200e97a-bf074435-00_bframes:3_action:2_guide1:9.mov"
+                        type="video/mp4">
+              </video> -->
+          </div>
+          <div class="column">
+            <div style="text-align: center; margin-bottom: 5px;"><b>Generated Crash</b></div>
+              <video autoplay muted loop playsinline style="width:100%">
+                <source src="static/bdd_selected/107_b2505382-de5238f0-00_bframes:3_action:2_guide1:9/(3)genvid_adv_107_b2505382-de5238f0-00_bframes:3_action:2_guide1:9.mov"
+                        type="video/mp4">
+              </video>
+
+              <video autoplay muted loop playsinline style="width:100%">
+                <source src="static/bdd_selected/61_b1dac7f7-6b2e0382-00_bframes:3_action:2_guide1:9/(3)genvid_adv_61_b1dac7f7-6b2e0382-00_bframes:3_action:2_guide1:9.mov"
+                        type="video/mp4">
+              </video>
+
+              <video autoplay muted loop playsinline style="width:100%">
+                <source src="static/bdd_selected/100_b1f4491b-bf7d513f-00_bframes:3_action:2_guide1:9/(3)genvid_adv_100_b1f4491b-bf7d513f-00_bframes:3_action:2_guide1:9.mov"
+                        type="video/mp4">
+              </video>
+
+              <video autoplay muted loop playsinline style="width:100%">
+                <source src="static/bdd_selected/39_b21d5efb-5e2cd743-00_bframes:3_action:2_guide1:9/(3)genvid_adv_39_b21d5efb-5e2cd743-00_bframes:3_action:2_guide1:9.mov"
+                        type="video/mp4">
+              </video>
+
+              <!-- <video autoplay muted loop playsinline style="width:100%">
+                <source src="static/bdd_selected/50_b200e97a-bf074435-00_bframes:3_action:2_guide1:9/(3)genvid_adv_50_b200e97a-bf074435-00_bframes:3_action:2_guide1:9.mov"
+                        type="video/mp4">
+              </video> -->
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End crash generation from non-crash data -->
+
+<!-- Baseline Comparisons -->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+      <h2 class="title is-3">Baseline Comparisons</h2>
+      <p style="margin-bottom: 2rem;">Other methods struggle to generate realistic crashes</p>
+      <center>
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="slider-item cosmos">
+          <div class="carousel-content">
+            <h3><b>
+            Cosmos (Cosmos-Predict1-7B-Video2World) [1]
+            </b></h3>
+            <video autoplay controls muted loop playsinline height="100%">
+              <source src="./static/baselines/cosmos_diffusion-video2world-7b_48_021_crash.mov"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="slider-item">
+          <div class="carousel-content">
+            <h3><b>
+              Sora (Text2Video) [2]
+              </b></h3>
+            <video autoplay controls muted loop playsinline height="100%">
+              <source src="./static/baselines/sora_cropped.mov"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="slider-item">
+          <div class="carousel-content">
+            <h3><b>
+              AVD2 [3]
+              </b></h3>
+            <video autoplay controls muted loop playsinline height="100%">
+              <source src="./static/baselines/avd2_sample2_resized.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="slider-item">
+          <div class="carousel-content">
+            <h3><b>
+              DrivingGen [4]
+              </b></h3>
+            <video autoplay controls muted loop playsinline height="100%">
+              <source src="./static/baselines/DrivingGen_rearend1.mov"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="slider-item">
+          <div class="carousel-content">
+            <h3><b>
+              Ctrl-V [5]
+              </b></h3>
+            <video autoplay controls muted loop playsinline height="100%">
+              <source src="./static/baselines/ctrlv.mov"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="slider-item">
+          <div class="carousel-content">
+            <h3><b>
+              Ctrl-Crash (Ours)
+              </b></h3>
+            <video autoplay controls muted loop playsinline height="100%">
+              <source src="./static/baselines/ctrl_crash_genvid_81_11_10137.mov"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </center>
+    </div>
+  </div>
+</section>
+<!-- End baseline comparisons -->
+
+
+<!--BibTex citation -->
+  <!-- <section class="section" id="BibTeX">
+    <div class="container is-fluid content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>None
+  </code></pre>
+    </div>
+</section> -->
+<!--End BibTex citation -->
+
+
+<!-- References -->
+<section class="section" id="references">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-5">References</h2>
+    <ol>
+      <li>[1] <b>Cosmos</b> - <i>Niket Agarwal, Arslan Ali, Maciej Bala, Yogesh Balaji, Erik Barker, Tiffany Cai, Prithvijit Chattopadhyay, Yongxin Chen, Yin Cui, Yifan Ding, et al. Cosmos world foundation model platform for physical ai, 2025</i></li>
+      <li>[2] <b>Sora</b> - <i>Tim Brooks, Bill Peebles, Connor Holmes, Will DePue, Yufei Guo, and OpenAI. Video generation models as world simulators, 2024</i></li>
+      <li>[3] <b>AVD2</b> - <i>Cheng Li, Keyuan Zhou, Tong Liu, Yu Wang, Mingqiao Zhuang, Huan-ang Gao, Bu Jin, and Hao Zhao. Avd2: Accident video diffusion for accident video description, 2025</i></li>
+      <li>[4] <b>DrivingGen</b> - <i>Zipeng Guo, Yuchen Zhou, and Chao Gou. Drivinggen: Efficient safety-critical driving video generation with latent diffusion models. In 2024 IEEE International Conference on Multimedia and Expo (ICME), pages 1–6, 2024</i></li>
+      <li>[5] <b>Ctrl-V</b> - <i>Ge Ya Luo, ZhiHao Luo, Anthony Gosselin, Alexia Jolicoeur-Martineau, and Christopher Pal. Ctrl-v: Higher fidelity autonomous vehicle video generation with bounding-box controlled object motion. Transactions on Machine Learning Research, 2025</i></li>
+    </ol>
+  </div>
+</section>
+
+<!-- Default Statcounter code for
+Ctrl-Crash-Anonymous_Visible
+https://notabot713.github.io/ctrlcrash.github.io/ -->
+<script type="text/javascript">
+  var sc_project=13139283; 
+  var sc_invisible=0; 
+  var sc_security="7b766924"; 
+  var scJsHost = "https://";
+  document.write("<sc"+"ript type='text/javascript' src='" +
+  scJsHost+
+  "statcounter.com/counter/counter.js'></"+"script>");
+  </script>
+  <noscript><div class="statcounter"><a title="Web Analytics"
+  href="https://statcounter.com/" target="_blank"><img
+  class="statcounter"
+  src="https://c.statcounter.com/13139283/0/7b766924/0/"
+  alt="Web Analytics"
+  referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+<!-- End of Statcounter Code -->
+
+  </body>
+  </html>
