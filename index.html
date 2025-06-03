@@ -153,6 +153,17 @@
               <span class="author-block"><b>Mila - Quebec AI Institute</b></span>
             </div>
             <div class="is-size-5 publication-authors" style="margin-top: 1rem;">
+              
+              <!-- Space for additional links -->
+              <span class="author-block" style="margin-left: 0.5rem;">
+                <a href="https://arxiv.org/abs/2506.00227" target="_blank" class="button is-small is-light">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              
               <span class="author-block">
                 <a href="https://github.com/CtrlCrash-Anonymous/Ctrl-Crash-Anonymous" target="_blank" class="button is-small is-light">
                   <span class="icon">
@@ -161,17 +172,8 @@
                   <span>Code</span>
                 </a>
               </span>
-              <!-- Space for additional links -->
-              <!-- <span class="author-block" style="margin-left: 0.5rem;">
-                <a href="#" target="_blank" class="button is-small is-light">
-                  <span class="icon">
-                    <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>Paper</span>
-                </a>
-              </span> -->
             </div>
-  
+            
             </div>
           </div>
         </div>
@@ -345,7 +347,7 @@
   <div class="hero-body">
     <div class="container is-max-desktop">
       <h2 class="title is-3">Crash Reconstruction</h2>
-      <p style="margin-bottom: 2rem;">Crash predicted by Ctrl-Crash using the initial frame and all bounding-box frames as input:</p>
+      <p style="margin-bottom: 2rem;">Crash predicted by Ctrl-Crash using only the initial ground-truth frame and all bounding-box frames as input:</p>
       <!-- Tab content -->
       <div id="BDD" class="tabcontent">
         <div class="row"> 
@@ -639,13 +641,22 @@
 
 
 <!--BibTex citation -->
-  <!-- <section class="section" id="BibTeX">
+  <section class="section" id="BibTeX">
     <div class="container is-fluid content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>None
+      <pre><code>
+        @misc{gosselin2025ctrlcrashcontrollablediffusionrealistic,
+          title={Ctrl-Crash: Controllable Diffusion for Realistic Car Crashes}, 
+          author={Anthony Gosselin and Ge Ya Luo and Luis Lara and Florian Golemo and Derek Nowrouzezahrai and Liam Paull and Alexia Jolicoeur-Martineau and Christopher Pal},
+          year={2025},
+          eprint={2506.00227},
+          archivePrefix={arXiv},
+          primaryClass={cs.CV},
+          url={https://arxiv.org/abs/2506.00227}, 
+        }
   </code></pre>
     </div>
-</section> -->
+</section>
 <!--End BibTex citation -->
 
 
